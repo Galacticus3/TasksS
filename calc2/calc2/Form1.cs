@@ -141,7 +141,7 @@ namespace calc2
             textBox1.Tag = textBox1.Text;
             textBox1.Text = "";
         }
-
+        // seoigjdrtjghpdtjhio ;tf'hk fp[tg
         private void button20_Click(object sender, EventArgs e)
         {
             if (plus)
