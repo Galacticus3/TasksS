@@ -51,7 +51,9 @@ namespace calc2
         {
             if (dilenzero == false)
             {
-            textBox1.Text = textBox1.Text + "3"; 
+                if (flag == true) textBox1.Text = "";
+                textBox1.Text = textBox1.Text + "3";
+                flag = false;
             } else
             { return; }
         }
@@ -60,7 +62,9 @@ namespace calc2
         {
             if (dilenzero == false)
             {
-            textBox1.Text = textBox1.Text + "4"; 
+                if (flag == true) textBox1.Text = "";
+                textBox1.Text = textBox1.Text + "4";
+                flag = false; 
             } else
             { return; }
         }
@@ -69,7 +73,9 @@ namespace calc2
         {
             if (dilenzero == false)
             {
-            textBox1.Text = textBox1.Text + "5"; 
+                if (flag == true) textBox1.Text = "";
+                textBox1.Text = textBox1.Text + "5";
+                flag = false;
             } else
             { return; }
         }
@@ -78,7 +84,9 @@ namespace calc2
         {
             if (dilenzero == false)
             {
-            textBox1.Text = textBox1.Text + "6"; 
+                if (flag == true) textBox1.Text = "";
+                textBox1.Text = textBox1.Text + "6";
+                flag = false; 
             } else
             { return; }
         }
@@ -87,7 +95,9 @@ namespace calc2
         {
             if (dilenzero == false)
             {
-            textBox1.Text = textBox1.Text + "7"; 
+                if (flag == true) textBox1.Text = "";
+                textBox1.Text = textBox1.Text + "7";
+                flag = false; 
             } else
             { return; }
         }
@@ -96,7 +106,9 @@ namespace calc2
         {
            if (dilenzero == false)
             {
-            textBox1.Text = textBox1.Text + "8"; 
+                if (flag == true) textBox1.Text = "";
+                textBox1.Text = textBox1.Text + "8";
+                flag = false;
             } else
             { return; }
         }
@@ -105,7 +117,9 @@ namespace calc2
         {
            if (dilenzero == false)
             {
-            textBox1.Text = textBox1.Text + "9"; 
+                if (flag == true) textBox1.Text = "";
+                textBox1.Text = textBox1.Text + "9";
+                flag = false;
             } else
             { return; }
         }
@@ -114,7 +128,10 @@ namespace calc2
         {
            if (dilenzero == false)
             {
-              if (textBox1.Text!="")  textBox1.Text = textBox1.Text + "0"; 
+                if (textBox1.Text != "") textBox1.Text = textBox1.Text + "0"; 
+               if (flag == true) { textBox1.Text = ""; textBox1.Text = textBox1.Text + "0"; }               
+               
+               flag = false;
             } else
             { return; }
         }
@@ -193,7 +210,8 @@ namespace calc2
             {
             minus = true;
             textBox1.Tag = textBox1.Text;
-            textBox1.Text = "";
+           // textBox1.Text = "";
+            flag = true;
              }
             else
             { return; }
@@ -205,7 +223,8 @@ namespace calc2
             {
             mnozh = true;
             textBox1.Tag = textBox1.Text;
-            textBox1.Text = "";
+           //textBox1.Text = "";
+            flag = true;
              }
             else
             { return; }
@@ -217,7 +236,8 @@ namespace calc2
             {
             dilen = true;
             textBox1.Tag = textBox1.Text;
-            textBox1.Text = "";
+           //textBox1.Text = "";
+            flag = true;
              }
             else
             { return; }
@@ -251,6 +271,7 @@ namespace calc2
                 else 
                  { textBox1.Text = Convert.ToString(Convert.ToDouble(textBox1.Tag) / Convert.ToDouble(textBox1.Text)); }
             }
+            flag = true;
         }
     }
 }
