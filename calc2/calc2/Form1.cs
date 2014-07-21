@@ -11,14 +11,17 @@ using System.Windows.Forms;
 namespace calc2
 {
     public partial class Form1 : Form
-    {
-        bool plus = false;
-        bool minus = false;
-        bool mnozh = false;
-        bool dilen = false;
-        bool dilenzero = false;
-        bool flag = false;
-                
+    { 
+        double rez = 0;    //результат
+        double n1 = 0;     //перше число вираження
+        double n2 = 0;     //друге число вираження
+        bool dilenzero = false;  //чи відбулось ділення на нуль
+        bool flag = false;  //для очищення екрану перед вводом першої цифри нового числа
+        bool flagEqv = false;  //відбулась дія "="
+
+        enum znaky { pusto = 1, plus, minus, mnozh, dilen };  //знак дії 
+        znaky znak = znaky.pusto;       
+
         public Form1()
         {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace calc2
         {
             if (dilenzero == false)
             {
-                if (flag == true) textBox1.Text = ""; 
+                if (flag == true) textBox1.Text = "";
                 textBox1.Text = textBox1.Text + "1";
                 flag = false;
             }
@@ -40,10 +43,11 @@ namespace calc2
         {
             if (dilenzero == false)
             {
-                if (flag == true) textBox1.Text = ""; 
+                if (flag == true) textBox1.Text = "";
                 textBox1.Text = textBox1.Text + "2";
                 flag = false;
-            } else
+            }
+            else
             { return; }
         }
 
@@ -54,7 +58,8 @@ namespace calc2
                 if (flag == true) textBox1.Text = "";
                 textBox1.Text = textBox1.Text + "3";
                 flag = false;
-            } else
+            }
+            else
             { return; }
         }
 
@@ -64,8 +69,9 @@ namespace calc2
             {
                 if (flag == true) textBox1.Text = "";
                 textBox1.Text = textBox1.Text + "4";
-                flag = false; 
-            } else
+                flag = false;
+            }
+            else
             { return; }
         }
 
@@ -76,7 +82,8 @@ namespace calc2
                 if (flag == true) textBox1.Text = "";
                 textBox1.Text = textBox1.Text + "5";
                 flag = false;
-            } else
+            }
+            else
             { return; }
         }
 
@@ -86,8 +93,9 @@ namespace calc2
             {
                 if (flag == true) textBox1.Text = "";
                 textBox1.Text = textBox1.Text + "6";
-                flag = false; 
-            } else
+                flag = false;
+            }
+            else
             { return; }
         }
 
@@ -97,42 +105,47 @@ namespace calc2
             {
                 if (flag == true) textBox1.Text = "";
                 textBox1.Text = textBox1.Text + "7";
-                flag = false; 
-            } else
+                flag = false;
+            }
+            else
             { return; }
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-           if (dilenzero == false)
+            if (dilenzero == false)
             {
                 if (flag == true) textBox1.Text = "";
                 textBox1.Text = textBox1.Text + "8";
                 flag = false;
-            } else
+            }
+            else
             { return; }
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-           if (dilenzero == false)
+            if (dilenzero == false)
             {
                 if (flag == true) textBox1.Text = "";
                 textBox1.Text = textBox1.Text + "9";
                 flag = false;
-            } else
+            }
+            else
             { return; }
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-           if (dilenzero == false)
+            if (dilenzero == false)
             {
-                if (textBox1.Text != "") textBox1.Text = textBox1.Text + "0"; 
-               if (flag == true) { textBox1.Text = ""; textBox1.Text = textBox1.Text + "0"; }               
-               
-               flag = false;
-            } else
+                if (textBox1.Text != "") textBox1.Text = textBox1.Text + "0";
+                if (flag == true) { textBox1.Text = "0"; // textBox1.Text = ""; textBox1.Text = textBox1.Text + "0"; 
+                                   }
+
+                flag = false;
+            }
+            else
             { return; }
         }
 
@@ -140,10 +153,11 @@ namespace calc2
         {
             textBox1.Text = "";
             textBox1.Tag = "";
-            plus = false;
-            minus = false;
-            mnozh = false;
-            dilen = false;
+            znak = znaky.pusto;
+            rez = 0;
+            n1 = 0;
+            n2 = 0;
+            
             dilenzero = false;
             flag = false;
         }
@@ -153,8 +167,10 @@ namespace calc2
         {
             if (textBox1.Text != "" && dilenzero == false)
             {
-                textBox1.Text = Convert.ToString(Math.Sqrt(Convert.ToDouble(textBox1.Text)));
-            } else
+                rez = Math.Sqrt(Convert.ToDouble(textBox1.Text));
+                textBox1.Text = Convert.ToString(rez);
+            }
+            else
             { return; }
         }
 
@@ -163,8 +179,10 @@ namespace calc2
         {
             if (textBox1.Text != "" && dilenzero == false)
             {
-                textBox1.Text = Convert.ToString((Convert.ToDouble(textBox1.Text)) * (-1));
-            } else
+                rez = Convert.ToDouble(textBox1.Text) * (-1);
+                textBox1.Text = Convert.ToString(rez);
+            }
+            else
             { return; }
         }
 
@@ -173,7 +191,8 @@ namespace calc2
         {
             if (textBox1.Text != "" && dilenzero == false)
             {
-            textBox1.Text = Convert.ToString((1 / Convert.ToDouble(textBox1.Text)));
+                rez = 1 / Convert.ToDouble(textBox1.Text);
+                textBox1.Text = Convert.ToString(rez);
             }
             else
             { return; }
@@ -184,94 +203,138 @@ namespace calc2
         {
             if (dilenzero == false)
             {
-                if (plus == false && minus == false && mnozh == false && dilen == false && (textBox1.Text == "")) textBox1.Text = textBox1.Text + "0";
+                if ((znak == znaky.pusto) && (textBox1.Text == "")) textBox1.Text = textBox1.Text + "0";
                 if (textBox1.Text.Contains(",") == false) textBox1.Text = textBox1.Text + ",";
             }
             else
             { return; }
         }
 
+        //кнопка +
         private void button12_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" && dilenzero == false)
             {
-            plus = true;
-            textBox1.Tag = textBox1.Text;
-           // textBox1.Text = "";
-            flag = true;
+                Actionn();
+                znak = znaky.plus;
+                flag = true;
+                n1 = 0;
             }
             else
             { return; }
         }
 
+        //кнопка -
         private void button13_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" && dilenzero == false)
             {
-            minus = true;
-            textBox1.Tag = textBox1.Text;
-           // textBox1.Text = "";
-            flag = true;
-             }
+                Actionn();
+                znak = znaky.minus;
+                flag = true;
+                n1 = 0;
+            }
             else
             { return; }
         }
 
+        //кнопка *
         private void button14_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" && dilenzero == false)
             {
-            mnozh = true;
-            textBox1.Tag = textBox1.Text;
-           //textBox1.Text = "";
-            flag = true;
-             }
+                Actionn();
+                znak = znaky.mnozh;
+                flag = true;
+                n1 = 0;
+            }
             else
             { return; }
         }
 
+        //кнопка /
         private void button15_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" && dilenzero == false)
             {
-            dilen = true;
-            textBox1.Tag = textBox1.Text;
-           //textBox1.Text = "";
-            flag = true;
-             }
+                Actionn();
+                znak = znaky.dilen;
+                flag = true;
+                n1 = 0;
+            }
             else
             { return; }
         }
-        // =
+        //кнопка =
         private void button20_Click(object sender, EventArgs e)
         {
-            if (plus)
+            if (textBox1.Text != "" && dilenzero == false)
             {
-                textBox1.Text = Convert.ToString(Convert.ToDouble(textBox1.Tag) + Convert.ToDouble(textBox1.Text));
+                Actionn();
+                flag = true;
             }
-            if (minus)
-            {
-                textBox1.Text = Convert.ToString(Convert.ToDouble(textBox1.Tag) - Convert.ToDouble(textBox1.Text));
-            }
-            if (mnozh)
-            {
-                textBox1.Text = Convert.ToString(Convert.ToDouble(textBox1.Tag) * Convert.ToDouble(textBox1.Text));
-            }
-            if (dilen)
-            {
-                if (Convert.ToDouble(textBox1.Text) == 0) 
-                 { textBox1.Text = "На ноль нельзя!";
-                 plus = false; 
-                 minus = false;
-                 mnozh = false;
-                 dilen = false;
-                 dilenzero = true;
-                 flag = false;
-                 }
-                else 
-                 { textBox1.Text = Convert.ToString(Convert.ToDouble(textBox1.Tag) / Convert.ToDouble(textBox1.Text)); }
-            }
-            flag = true;
+            else
+            { return; }
         }
+
+        void Actionn()
+        {
+            n2 = Convert.ToDouble(textBox1.Text);
+
+            switch (znak)
+            {
+                case znaky.pusto:
+                    {
+                        rez = Convert.ToDouble(textBox1.Text);
+                        break;
+                    }
+                case znaky.plus:
+                    {
+                        if (n1 != 0) n2 = n1;
+                        rez = rez + n2;
+                        textBox1.Text = Convert.ToString(rez);
+                        n1 = n2;
+                        break;
+                    }
+                case znaky.minus:
+                    {
+                        if (n1 != 0) n2 = n1;
+                        rez = rez - n2;
+                        textBox1.Text = Convert.ToString(rez);
+                        n1 = n2;
+                        break;
+                    }
+
+                case znaky.mnozh:
+                    {
+                        if (n1 != 0) n2 = n1;
+                        rez = rez * n2;
+                        textBox1.Text = Convert.ToString(rez);
+                        n1 = n2;
+                        break;
+                    }
+                case znaky.dilen:
+                    {
+                        if (Convert.ToDouble(textBox1.Text) == 0)
+                        {
+                            textBox1.Text = "На ноль нельзя!";
+                            znak = znaky.pusto;
+                            dilenzero = true;
+                            flag = false;
+                        }
+                        else
+                        {
+                            if (n1 != 0) n2 = n1;
+                            rez = rez / n2;
+                            textBox1.Text = Convert.ToString(rez); //Convert.ToDouble(textBox1.Text));
+                            n1 = n2;
+                        }
+                        break;
+                    }
+            }
+                      
+           
+        }
+
     }
 }
